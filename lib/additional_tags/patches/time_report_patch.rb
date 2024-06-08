@@ -36,9 +36,9 @@ module AdditionalTags
 
           time_entry_table.join(issues_table)
                           .on(issues_table[:id].eq(time_entry_table[:issue_id]))
-                          .join(taggings_table)
+                          .join(taggings_table, Arel::Nodes::OuterJoin)
                           .on(taggings_table[:taggable_id].eq(issues_table[:id]).and(taggings_table[:taggable_type].eq('Issue')))
-                          .join(tags_table)
+                          .join(tags_table, Arel::Nodes::OuterJoin)
                           .on(tags_table[:id].eq(taggings_table[:tag_id]))
                           .join_sources
         end
