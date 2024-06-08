@@ -3,6 +3,15 @@
 module AdditionalTagsHelper
   include ActsAsTaggableOn::TagsHelper
 
+  def format_tags_json(tags)
+    tags.map do |tag|
+      {
+        'id' => tag.name,
+        'text' => tag.name
+      }
+    end
+  end
+
   def manageable_tags
     AdditionalTags::Tags.sort_tag_list ActsAsTaggableOn::Tag.where({})
   end
@@ -30,7 +39,7 @@ module AdditionalTagsHelper
 
   def manageable_tag_column_values(tag)
     columns = []
-    manageable_tag_columns.each do |_column, column_values|
+    manageable_tag_columns.each_value do |column_values|
       cnt = column_values[:counts][tag.id]
       cnt = 0 if cnt.blank?
 
@@ -41,6 +50,10 @@ module AdditionalTagsHelper
                  end
     end
     columns
+  end
+
+  def values_for_sort_direction
+    [[l(:label_ascending), 'asc'], [l(:label_descending), 'desc']]
   end
 
   def sort_tags_for_list(tags, sort_by: nil, sort_order: nil)

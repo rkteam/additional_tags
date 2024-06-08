@@ -4,7 +4,7 @@ require:
   - rubocop-minitest
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0
   TargetRailsVersion: 6.1
   NewCops: enable
   ActiveSupportExtensionsEnabled: true
@@ -87,6 +87,9 @@ Style/FrozenStringLiteralComment:
   Exclude:
     - '/**/*.rsb'
 
+Style/SuperWithArgsParentheses:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
@@ -135,4 +138,7 @@ Rails/RedundantPresenceValidationOnBelongsTo:
 # see https://github.com/rubocop/rubocop-rails/issues/825
 # should be removed and corrected in code, if this bug is fixed
 Rails/ActionControllerFlashBeforeRender:
+  Enabled: false
+
+Bundler/DuplicatedGroup:
   Enabled: false

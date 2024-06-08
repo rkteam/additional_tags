@@ -27,6 +27,15 @@ module AdditionalTags
         elsif options[:visible_condition]
           scope = scope.where klass.visible_condition(user)
         end
+
+        # @TODO: this should be activated and replace next line
+        #        Additionals::EntityMethodsGlobal should be included for this
+        #
+        # if options[:name_like]
+        #   scope = scope.like_with_wildcard columns: "#{TAG_TABLE_NAME}.name",
+        #                                    value: options[:name_like],
+        #                                    wildcard: :both
+        # end
         scope = scope.where "LOWER(#{TAG_TABLE_NAME}.name) LIKE ?", "%#{options[:name_like].downcase}%" if options[:name_like]
         scope = scope.where "#{TAG_TABLE_NAME}.name=?", options[:name] if options[:name]
         scope = scope.where "#{TAGGING_TABLE_NAME}.taggable_id!=?", options[:exclude_id] if options[:exclude_id]
@@ -39,8 +48,7 @@ module AdditionalTags
       end
 
       def all_type_tags(klass, without_projects: false)
-        ActsAsTaggableOn::Tag.all
-                             .joins(tag_for_joins(klass, without_projects: without_projects))
+        ActsAsTaggableOn::Tag.joins(tag_for_joins(klass, without_projects: without_projects))
                              .distinct
                              .order(:name)
       end
@@ -146,7 +154,7 @@ module AdditionalTags
                    "COUNT(DISTINCT #{TAGGING_TABLE_NAME}.taggable_id) AS count"]
 
         columns << "MIN(#{TAGGING_TABLE_NAME}.created_at) AS last_created" if sort_by == 'last_created'
-        columns.to_list
+        columns.to_comma_list
       end
 
       def status_for_tag_value(scope:, tag_id:, group_id: nil, group_id_is_bool: false)

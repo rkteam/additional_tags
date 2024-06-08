@@ -11,7 +11,8 @@ module AdditionalTags
                 partial: 'issues/tags_form_details',
                 locals: { tags_form: 'issues/tags_form' }
       render_on :view_issues_show_details_bottom, partial: 'issues/tags'
-      render_on :view_issues_sidebar_planning_bottom, partial: 'issues/tags_sidebar'
+      render_on :view_issues_sidebar_planning_bottom, partial: 'issues/tags_sidebar_before'
+      render_on :view_issues_sidebar_queries_bottom, partial: 'issues/tags_sidebar_after'
       render_on :view_layouts_base_html_head, partial: 'additional_tags/html_head'
       render_on :view_layouts_base_body_bottom, partial: 'additional_tags/body_bottom'
       render_on :view_wiki_form_bottom, partial: 'tags_form_bottom'
@@ -19,10 +20,14 @@ module AdditionalTags
       render_on :view_wiki_show_sidebar_bottom, partial: 'wiki/tags_sidebar'
 
       def controller_issues_edit_before_save(context = {})
+        return unless AdditionalTags.setting? :active_issue_tags
+
         tags_journal context[:issue], context[:params]
       end
 
       def controller_issues_bulk_edit_before_save(context = {})
+        return unless AdditionalTags.setting? :active_issue_tags
+
         issue = context[:issue]
         params = context[:params]
 
@@ -54,7 +59,7 @@ module AdditionalTags
 
         pdf.ln
         pdf.SetFontStyle '', 8
-        pdf.RDMCell 190, 5, page.tag_list.to_list
+        pdf.RDMCell 190, 5, page.tag_list.to_comma_list
         pdf.ln
       end
 
