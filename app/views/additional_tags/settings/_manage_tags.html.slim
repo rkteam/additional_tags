@@ -20,15 +20,16 @@
             td.checkbox.hide-when-print
               = check_box_tag 'ids[]', tag.id, false, id: nil
             td
-              = additional_tag_link tag,
+              = additional_tag_link(tag,
                                     link: edit_additional_tag_path(tag),
-                                    use_colors: use_colors,
-                                    color_theme: color_theme
+                                    use_colors:,
+                                    color_theme:)
 
             - manageable_tag_column_values(tag).each do |column|
               td = column
             td.buttons
-              = link_to l(:button_edit), edit_additional_tag_path(tag),
+              = link_to sprite_icon('edit', l(:button_edit)),
+                        edit_additional_tag_path(tag),
                         class: 'icon icon-edit'
               = delete_link additional_tags_path(ids: tag)
 - else

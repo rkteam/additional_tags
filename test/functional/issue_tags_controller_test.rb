@@ -3,24 +3,6 @@
 require File.expand_path '../../test_helper', __FILE__
 
 class IssueTagsControllerTest < AdditionalTags::ControllerTest
-  fixtures :projects,
-           :users,
-           :roles,
-           :members,
-           :member_roles,
-           :issues,
-           :issue_statuses,
-           :versions,
-           :trackers,
-           :projects_trackers,
-           :issue_categories,
-           :enabled_modules,
-           :enumerations,
-           :attachments,
-           :workflows,
-           :custom_fields, :custom_values, :custom_fields_projects, :custom_fields_trackers,
-           :additional_tags, :additional_taggings
-
   def setup
     prepare_tests
     @request.env['HTTP_REFERER'] = '/issue_tags'
@@ -189,7 +171,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       user = users :users_002
 
       assert_not_equal @issue_1.tag_list, [tag]
-      assert_includes Issue.available_tags(user: user).map(&:name), tag
+      assert_includes Issue.available_tags(user:).map(&:name), tag
       post :update,
            params: { ids: [1], issue: { tag_list: [tag] } }
 
@@ -201,7 +183,7 @@ class IssueTagsControllerTest < AdditionalTags::ControllerTest
       @role.remove_permission! :edit_issue_tags
       tag2 = 'Third'
 
-      assert_includes Issue.available_tags(user: user).map(&:name), tag2
+      assert_includes Issue.available_tags(user:).map(&:name), tag2
       post :update,
            params: { ids: [1], issue: { tag_list: [tag2] } }
 

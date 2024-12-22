@@ -1,19 +1,15 @@
 # frozen_string_literal: true
 
-require 'additional_tags/plugin_version'
-
 loader = RedminePluginKit::Loader.new plugin_id: 'additional_tags'
 
 Redmine::Plugin.register :additional_tags do
   name 'Additional Tags'
   author 'AlphaNodes GmbH'
   description 'Redmine tagging support'
-  version AdditionalTags::PluginVersion::VERSION
+  version AdditionalTags::VERSION
   url 'https://github.com/alphanodes/additional_tags/'
   author_url 'https://alphanodes.com/'
-  directory File.dirname(__FILE__)
-
-  requires_redmine version_or_higher: '5.0'
+  requires_redmine version_or_higher: '6.0'
 
   settings default: loader.default_settings,
            partial: 'additional_tags/settings/settings'
@@ -31,7 +27,9 @@ Redmine::Plugin.register :additional_tags do
   menu :admin_menu,
        :additional_tags,
        { controller: 'settings', action: 'plugin', id: 'additional_tags' },
-       caption: :field_tags
+       caption: :field_tags,
+       plugin: 'additionals',
+       icon: 'tags'
 end
 
 RedminePluginKit::Loader.persisting { loader.load_model_hooks! }

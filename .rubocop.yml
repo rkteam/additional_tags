@@ -4,8 +4,8 @@ require:
   - rubocop-minitest
 
 AllCops:
-  TargetRubyVersion: 3.0
-  TargetRailsVersion: 6.1
+  TargetRubyVersion: 3.1
+  TargetRailsVersion: 7.2
   NewCops: enable
   ActiveSupportExtensionsEnabled: true
 
@@ -50,11 +50,7 @@ Metrics/PerceivedComplexity:
 Style/ExpandPathArguments:
   Enabled: true
   Exclude:
-    - additional_tags.gemspec
     - test/**/*
-
-Rails/ApplicationJob:
-  Enabled: false
 
 Lint/AmbiguousOperatorPrecedence:
   Enabled: false
@@ -63,9 +59,6 @@ Rails/ContentTag:
   Enabled: true
   Exclude:
     - app/helpers/additional_tags_issues_helper.rb
-
-Rails/ApplicationRecord:
-  Enabled: false
 
 Rails/CreateTableWithTimestamps:
   Enabled: false
@@ -135,8 +128,7 @@ Layout/LineContinuationLeadingSpace:
 Rails/RedundantPresenceValidationOnBelongsTo:
   Enabled: false
 
-# see https://github.com/rubocop/rubocop-rails/issues/825
-# should be removed and corrected in code, if this bug is fixed
+# does not work with redirect_to or ensure
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
 
