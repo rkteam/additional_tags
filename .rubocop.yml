@@ -4,7 +4,7 @@ require:
   - rubocop-minitest
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.1
   TargetRailsVersion: 6.1
   NewCops: enable
   ActiveSupportExtensionsEnabled: true
@@ -135,8 +135,7 @@ Layout/LineContinuationLeadingSpace:
 Rails/RedundantPresenceValidationOnBelongsTo:
   Enabled: false
 
-# see https://github.com/rubocop/rubocop-rails/issues/825
-# should be removed and corrected in code, if this bug is fixed
+# does not work with redirect_to or ensure
 Rails/ActionControllerFlashBeforeRender:
   Enabled: false
 

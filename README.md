@@ -5,11 +5,11 @@
 ## Features
 
 - Tags for issues. To use them you need to:
-  -  *Activate issue tags* in the plugin configuration
-  -  and update your role permissions in the Redmine administration *Roles & permissions / Issue tracking*.
+  - *Activate issue tags* in the plugin configuration
+  - and update your role permissions in the Redmine administration *Roles & permissions / Issue tracking*.
 - Tags for wiki pages. To use them  you need to:
   - *Activate wiki tags* in the plugin configuration
-  -  and update your role permissions in the Redmine administration *Roles & permissions / Wiki*
+  - and update your role permissions in the Redmine administration *Roles & permissions / Wiki*
 - Available role permissions for issue tags (section *Issue tracking*):
   - Add issue tags
   - Edit issue tags
@@ -59,7 +59,7 @@ Start using it, too. The example image shows the centralized tag management in t
 ## Requirements
 
 - Redmine `>= 5.0`
-- Ruby `>= 3.0`
+- Ruby `>= 3.1`
 - Redmine plugins: [additionals](https://www.redmine.org/plugins/additionals)
 
 ## Installing
@@ -94,6 +94,7 @@ git clone https://github.com/alphanodes/additional_tags.git plugins/additional_t
 ### 2. Install dependencies and migrate database
 
 ```shell
+bundle config set --local without 'development test'
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```
@@ -136,9 +137,26 @@ rm -rf plugins/additional_tags
 ## License
 
 This plugin is licensed under the terms of GNU/GPL v2.
-See LICENSE for details.
+See [LICENSE](LICENSE) for details.
+
+## Redmine Copyright
+
+The additional_tags is a plugin extension for Redmine Project Management Software, whose Copyright follows.
+Copyright (C) 2006-  Jean-Philippe Lang
+
+Redmine is a flexible project management web application written using Ruby on Rails framework.
+More details can be found in the doc directory or on the official website <http://www.redmine.org>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 ## Credits
+
+### Code
 
 The source code is a (almost) rewrite of
 
@@ -146,3 +164,12 @@ The source code is a (almost) rewrite of
 - [redmineup_tags](https://www.redmine.org/plugins/redmineup_tags)
 
 Special thanks to the original author and contributors for making this awesome hook for Redmine.
+
+### Icons
+
+Thanks to:
+
+- Font Awesome Free Icons (<https://fontawesome.com/license/free>) licenced under - Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License.
+  Copyright (c) 2018- Fonticons, Inc.
+- Tabler Icons - Free and open source icons (<https://tabler.io/icons>) licensed under MIT License.
+  Copyright (c) 2020- Paweł Kuna

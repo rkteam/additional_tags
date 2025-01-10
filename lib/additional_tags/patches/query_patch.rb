@@ -13,12 +13,11 @@ module AdditionalTags
         def sql_for_tags_field(field, _operator, values)
           build_sql_for_tags_field klass: queried_class,
                                    operator: operator_for(field),
-                                   values: values
+                                   values:
         end
 
-        def initialize_tags_filter(position: nil)
-          add_available_filter 'tags', order: position,
-                                       type: :list_optional,
+        def initialize_tags_filter
+          add_available_filter 'tags', type: :list_optional,
                                        values: -> { available_tag_values queried_class }
         end
 
@@ -32,7 +31,7 @@ module AdditionalTags
         end
 
         def available_tag_values(klass)
-          klass.available_tags(project: project)
+          klass.available_tags(project:)
                .pluck(:name)
                .map { |name| [name, name] }
         end
@@ -69,7 +68,7 @@ module AdditionalTags
           when '=', '!'
             ids_list = klass.tagged_with(values, any: true).ids
             # special case: filter with deleted tag
-            return AdditionalsQuery::NO_RESULT_CONDITION if ids_list.blank? && values.present? && operator == '='
+            return Additionals::SQL_NO_RESULT_CONDITION if ids_list.blank? && values.present? && operator == '='
           else
             allowed_projects = Project.where(Project.allowed_to_condition(User.current, permission))
                                       .select(:id)
@@ -90,7 +89,7 @@ module AdditionalTags
               "(#{klass.table_name}.id #{compare} (#{ids_list.join ','}))"
             elsif values.present? && operator == '='
               # special case: filter with deleted tag
-              AdditionalsQuery::NO_RESULT_CONDITION
+              Additionals::SQL_NO_RESULT_CONDITION
             end
           else
             entries = ActsAsTaggableOn::Tagging.where taggable_type: klass.name
