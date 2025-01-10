@@ -4,7 +4,7 @@ loader = RedminePluginKit::Loader.new plugin_id: 'additional_tags'
 
 Redmine::Plugin.register :additional_tags do
   name 'Additional Tags'
-  author 'AlphaNodes GmbH'
+  author 'AlphaNodes GmbH (edited by RKteam)'
   description 'Redmine tagging support'
   version AdditionalTags::VERSION
   url 'https://github.com/alphanodes/additional_tags/'
